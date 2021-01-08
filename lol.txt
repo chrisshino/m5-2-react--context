@@ -1,0 +1,22 @@
+useContext
+
+has a provider and a consumer
+
+the provider is in the highest level of global state in APP
+a consumer must OPT IN to get the data thats stored there
+export const UserContext = React.createContext()
+
+1. create a createContext
+2. access the provider in the prop spot 
+<UserContext.Provider value={{searchTerm: searchTerm}}>
+3. grab the providor inside by doing useContext(userContext)
+
+export and import the context
+
+<UserContext.Provider value={{user, setUser}>
+
+</ UserContext.Provider>
+
+const {user, setUser } = useContext(UserContext)
+
+
