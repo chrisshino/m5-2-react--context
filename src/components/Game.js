@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {items} from './data'
@@ -7,15 +7,14 @@ import useInterval from "../hooks/use-interval.hook";
 
 import cookieSrc from "../cookie.svg";
 import Item from "./Item";
+import {GameContext} from './GameContext'
 
-
-const Game = ({numCookies, setNumCookies, purchasedItems, setPurchasedItems, numOfGeneratedCookies}) => {
-  
+const Game = () => {
+  const {numCookies, setNumCookies, purchasedItems, cookiesPerSecond, setPurchasedItems} = useContext(GameContext)
 
   const incrementCookies = () => {
     setNumCookies((c) => c + 1);
   };
-
 
   React.useEffect(() => {
     document.title = `${numCookies} cookies - Cookie Clicker Workshop`;
@@ -44,7 +43,7 @@ const Game = ({numCookies, setNumCookies, purchasedItems, setPurchasedItems, num
       <GameArea>
         <Indicator>
           <Total>{numCookies} cookies</Total>
-          <strong>{numOfGeneratedCookies}</strong> cookies
+          <strong>{cookiesPerSecond}</strong> cookies
           per second
         </Indicator>
         <Button onClick={incrementCookies}>

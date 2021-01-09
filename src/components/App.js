@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import GlobalStyles from "./GlobalStyles";
@@ -6,48 +6,26 @@ import Home from "./Home";
 import Game from "./Game";
 import {items} from './data'
 import useInterval from '../hooks/use-interval.hook'
+import {GameContext} from './GameContext'
 
 function App(props) {
-  const [numCookies, setNumCookies] = useState(1000);
-
-  const [purchasedItems, setPurchasedItems] = useState({
-    cursor: 0,
-    grandma: 0,
-    farm: 0,
-  })
-
-  const calculateCookiesPerSecond = (purchasedItems) => {
-    
-    return Object.keys(purchasedItems).reduce((acc, itemId) => {
-      const numOwned = purchasedItems[itemId];
-      const item = items.find((item) => item.id === itemId);
-      const value = item.value;
-  
-      return acc + value * numOwned;
-    }, 0);
-  };
+  const {numCookies, setNumCookies, cookiesPerSecond} = useContext(GameContext)
 
   useInterval(() => {
     window.localStorage.setItem('cookies', numCookies)
-    const numOfGeneratedCookies = calculateCookiesPerSecond(purchasedItems);
-    setNumCookies(numCookies + numOfGeneratedCookies);
+    setNumCookies(numCookies + cookiesPerSecond);
   }, 1000);
 
-  
 
   return (
     <>
       <GlobalStyles />
       <Router>
         <Route exact path="/">
-          <Home numCookies={numCookies} setNumCookies={setNumCookies} purchasedItems={purchasedItems} setPurchasedItems={setPurchasedItems}/>
+          <Home/>
         </Route>
         <Route path="/game">
-          <Game 
-          numCookies={numCookies} 
-          setNumCookies={setNumCookies} 
-          purchasedItems={purchasedItems} 
-          setPurchasedItems={setPurchasedItems} numOfGeneratedCookies = {calculateCookiesPerSecond(purchasedItems)}/>
+          <Game/>
         </Route>
       </Router>
     </>
