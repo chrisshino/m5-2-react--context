@@ -38,6 +38,7 @@ const Game = () => {
     };
   });
 
+
   return (
     <Wrapper>
       <GameArea>
@@ -69,11 +70,15 @@ const Game = () => {
                 }
 
                 setNumCookies(numCookies - item.cost);
-                
-                setPurchasedItems({
+
+                const storedItems = {
                   ...purchasedItems,
                   [item.id]: purchasedItems[item.id] + 1,
-                });
+                }
+                setPurchasedItems(
+                  storedItems
+                );
+                window.localStorage.setItem('items', JSON.stringify(storedItems))
               }}
             />
           );
