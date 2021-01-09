@@ -1,10 +1,11 @@
 import React, {useState, createContext} from 'react'
+import usePersistedState from '../hooks/use-persisted';
 import {items} from './data'
 
 
 export const GameContext = createContext({})
 export const GameProvider = ({children}) => {
-  const [numCookies, setNumCookies] = useState(1000);
+  const [numCookies, setNumCookies] = usePersistedState(1000, 'numCookies');
   const [purchasedItems, setPurchasedItems] = useState({
     cursor: 0,
     grandma: 0,

@@ -12,10 +12,8 @@ function App(props) {
   const {numCookies, setNumCookies, cookiesPerSecond} = useContext(GameContext)
 
   useInterval(() => {
-    window.localStorage.setItem('cookies', numCookies)
     setNumCookies(numCookies + cookiesPerSecond);
   }, 1000);
-
 
   return (
     <>
